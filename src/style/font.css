@@ -1,0 +1,61 @@
+@font-face {
+  font-family: "SF UI Text";
+  src: url('../font/SF-UI/SF-UI-Text-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SF UI Text Bold";
+  src: url('../font/SF-UI/SF-UI-Text-Bold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF UI Text Semibold";
+  src: url('../font/SF-UI/SF-UI-Text-Semibold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF UI Text Medium";
+  src: url('../font/SF-UI/SF-UI-Text-Medium.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "raleway";
+  src: url('../font/SF-UI/raleway.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF Pro Text";
+  src: url('../font/SanFrancisco/SF-Pro-Text-Regular.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF Pro Text Bold";
+  src: url('../font/SanFrancisco/SF-Pro-Text-Bold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF Pro Text Semibold";
+  src: url('../font/SanFrancisco/SF-Pro-Text-Semibold.otf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SF Pro Text Medium";
+  src: url('../font/SanFrancisco/SF-Pro-Text-Medium.otf');
+  font-weight: normal;
+  font-style: normal;
+}
