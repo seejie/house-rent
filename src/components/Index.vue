@@ -675,16 +675,18 @@
     },
 
     mounted() {
+      this.initScript()
       this.height = this.$refs.getheight.offsetHeight;
       if (this.height > 120) {
         this.isheight = true
       } else {
         this.isheight = false
       }
-      this.getMap()
+      // this.getMap()
     },
 
     created() {
+      window.initAutocomplete = this.getMap
       this.getDataHourseDetail();
       this.getDataAgent();
       // this.getAreaData();
@@ -708,6 +710,11 @@
 
     },
     methods: {
+      initScript () {
+        const script = document.createElement('script')
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=en-ww'
+        document.getElementsByTagName("head")[0].appendChild(script)
+      },
       alertTip: function() {
         this.istip = !this.istip;
       },
