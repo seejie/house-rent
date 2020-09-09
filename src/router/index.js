@@ -5,6 +5,7 @@ import Propertys from '@/components/Propertys'
 import maps from '@/components/common/maps.vue'
 import invitation from '@/components/invitation'
 import Detail from '@/components/Detail'
+import zixun from '@/components/zixun'
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +34,10 @@ export default new Router({
       path: '/Detail',
       name: 'Detail',
       component: Detail
+    }, {
+      path: '/zixun',
+      name: 'zixun',
+      component: zixun
     }
   ]
 })
