@@ -143,7 +143,7 @@
           <div v-else="this.commonApi.getRequest().language !=='Mandarin'">
 
           </div>
-          <div class="loctionBox">
+          <div class="loctionBox" @click="mapClicked">
             <div id="map" style="  height: 100%;width:100%"></div>
           </div>
         </van-col>
@@ -711,7 +711,10 @@
     },
     methods: {
       initScript () {
+        const sdk = document.getElementById('mapSdk')
+        if (sdk) return this.getMap()
         const script = document.createElement('script')
+        script.id = 'mapSdk'
         script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=en-ww'
         document.getElementsByTagName("head")[0].appendChild(script)
       },
@@ -1294,9 +1297,14 @@
         });
         // map.setCenter(new google.maps.LatLng( 23.117055306224895, 113.2759952545166));
         map.setCenter(new google.maps.LatLng(this.lat, this.lgt));
+      },
+      // 地图被点击
+      mapClicked () {
+        this.$router.push({
+          path: 'mapView',
+          query: {lat: this.lat, lgt: this.lgt}
+        })
       }
-
-
     }
 
     // });

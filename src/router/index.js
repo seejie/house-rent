@@ -6,6 +6,7 @@ import maps from '@/components/common/maps.vue'
 import invitation from '@/components/invitation'
 import Detail from '@/components/Detail'
 import zixun from '@/components/zixun'
+import mapView from '@/components/mapView'
 Vue.use(Router)
 
 export default new Router({
@@ -38,6 +39,10 @@ export default new Router({
       path: '/zixun',
       name: 'zixun',
       component: zixun
+    }, {
+      path: '/mapView',
+      name: 'mapView',
+      component: mapView
     }
   ]
 })
