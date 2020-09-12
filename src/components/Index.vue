@@ -748,17 +748,8 @@
 
         this.axios.get("/api/h5/v1/houses/id", {
           params: {
-            // houseId: '1280779813027713024',
-            houseId: '1301343829730922496',
-            agentId: '1277072900272295936'
-            // agentId: '1298862484266029056',
-            // houseId: '1299200136970375168',
-            // agentId: '1298862484266029056',
-            // houseId: '1280054959441842176',
-            // agentId: '1298862484266029056',
-            // houseId: '1299533045837205504',
-            // houseId: '1299533045837205504',
-            // agentId: '1277068876751966208'
+            agentId: '1300421010809556992',
+            houseId: '1303515252587106304'
             // houseId: this.commonApi.getRequest().houseId,
             // agentId: this.commonApi.getRequest().agentId
           },
@@ -828,7 +819,6 @@
           } else {
             this.landSizeTTT = parseInt(this.floorSize / 4).toString().split('.')[0];
           }
-
           if (this.rentingPrice * this.exchangeRate / 7 > 0) {
             this.renTTT = '-'
           } else {
@@ -840,7 +830,7 @@
             this.price_sqm = '-'
           }
           // if ('Mandarin' === "Mandarin") {
-            if (this.commonApi.getRequest().language === "Mandarin") {
+          if (this.commonApi.getRequest().language === "Mandarin") {
             this.isCn = true;
             this.isNotCn = false;
             if (this.propertyType == 1) {
@@ -1211,8 +1201,8 @@
       getDataAgentDetail: function() {
         this.axios.get("/api/h5/v1/agents/id", {
           params: {
-            agentId: this.commonApi.getRequest().agentId
-            // agentId: '1277072900272295936'
+            // agentId: this.commonApi.getRequest().agentId
+            agentId: '1300421010809556992'
           },
         }).then(res => {
           this.firstName = res.data.data.firstName;
