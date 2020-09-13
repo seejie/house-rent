@@ -109,7 +109,8 @@
         </van-slider>
 
         <van-col span="20" class="currency_mini currency">0</van-col>
-        <van-col span="4" class="currency_max currency">{{this.$route.query.currency.split(',')[2]}}{{this.commonApi.formatNumber(parseInt(maxpriceRent * this.$route.query.Rate/1000))}}M+</van-col>
+        <van-col span="4" class="currency_max currency" v-if="currencyUnit">{{currencyUnit}}</van-col>
+        <van-col span="4" class="currency_max currency" v-else>{{this.$route.query.currency.split(',')[2]}}{{this.commonApi.formatNumber(parseInt(maxpriceRent * this.$route.query.Rate/1000))}}M+</van-col>
       </div>
       <div class="text_title form_title">{{$t("information")}}</div>
       <van-form @submit="onSubmit">
@@ -179,7 +180,8 @@
         bedrooms: '',
         activeNames: ['1'],
         value1: '1',
-        addresValue: '',
+        // addresValue: '',
+        addresValue: this.$route.query.addr || '',
         addresItems: 0,
         villages: [],
         username: '',
@@ -277,7 +279,8 @@
         headerbg: '../assets/cnbg.png',
         exchangeRate: '',
         symbol: 'K',
-        value8: ''
+        value8: '',
+        currencyUnit: ''
       }
 
     },
@@ -337,6 +340,12 @@
         this.addressObj = items;
         this.addresValue = this.addressObj.name + this.addressObj.address;
         this.isOpen = !this.isOpen;
+        // 动态换算货币单位
+        this.changeCurrencyUnit(items)
+      },
+      changeCurrencyUnit (obj) {
+        console.log(obj, '-----obj-----')
+        this.currencyUnit = '2323'
       },
       searchLoction: function() {
         if (!this.addresValue) {
@@ -431,8 +440,11 @@
         this.releaseHourseDetail();
       },
       herfMaps() {
+        const query = JSON.parse(JSON.stringify(this.$route.query))
         this.$router.push({
-          path: "/maps"
+          // path: "/maps"
+          path: "/mapPiker",
+          query
         });
       },
       getVillageData: function() {

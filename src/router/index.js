@@ -7,6 +7,7 @@ import invitation from '@/components/invitation'
 import Detail from '@/components/Detail'
 import zixun from '@/components/zixun'
 import mapView from '@/components/mapView'
+import mapPiker from '@/components/mapPiker'
 Vue.use(Router)
 
 export default new Router({
@@ -43,6 +44,10 @@ export default new Router({
       path: '/mapView',
       name: 'mapView',
       component: mapView
+    }, {
+      path: '/mapPiker',
+      name: 'mapPiker',
+      component: mapPiker
     }
   ]
 })

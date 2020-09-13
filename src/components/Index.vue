@@ -695,7 +695,6 @@
       // this.languageConuntry = this.commonApi.getRequest().language;
     },
     computed: {
-
       getBackground() {
         switch (this.hourseStatus) {
           case 1:
@@ -711,8 +710,8 @@
     },
     methods: {
       initScript () {
-        const sdk = document.getElementById('mapSdk')
-        if (sdk) return this.getMap()
+        const mapSdk = document.getElementById('mapSdk')
+        if(mapSdk) return this.getMap()
         const script = document.createElement('script')
         script.id = 'mapSdk'
         script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=en-ww'
