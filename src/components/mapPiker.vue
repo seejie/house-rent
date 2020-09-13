@@ -126,14 +126,28 @@ export default {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           this.latitude = this.selected.geometry.location.lat()
           this.longitude = this.selected.geometry.location.lng()
-          console.log(results.address_components, '-----results.address_components-----')
+
           const addr = results.address_components.map(el => el.short_name).join(',')
+          let country = ''
+          let province = ''
+          let city = ''
+          let district = ''
+          results.address_components.forEach(el => {
+            if (el.types[0] === 'country') country = el.long_name
+            else if (el.types[0] === 'administrative_area_level_1') province = el.long_name
+            else if (el.types[0] === 'locality') city = el.long_name || 'NA'
+            else if (el.types[0] === 'sublocality_level_1') district = el.long_name
+          })
 
           const query = Object.assign({}, 
             JSON.parse(JSON.stringify(this.$route.query)), {
             lat: this.latitude,
             lgt: this.longitude,
-            addr
+            addr,
+            country,
+            province,
+            city,
+            district
           })
           this.$router.push({
             path: '/Propertys',

@@ -382,32 +382,51 @@
         if (!this.addresValue == '' & !this.leadType == '' & !this.result.value == '' || !this.valueSqm == '' & !this
           .username == '' & !this.tel == '' & !this.email == '') {
 
-          this.axios.post("/api/h5/v1/leads", {
-            community: this.addresValue,
-            communityId: this.addressObj.id,
-            country: this.addressObj.country,
-            countryId: this.addressObj.countryId,
-            province: this.addressObj.province,
-            provinceId: this.addressObj.provinceId,
-            city: this.addressObj.city,
-            cityId: this.addressObj.cityId,
-            district: this.addressObj.district,
-            districtId: this.addressObj.districtId,
-            address: this.addressObj.address,
+
+          const {addr, country,province,city,district,lat,lgt} = this.$route.query
+          const addrInfo = {
+            addr,
+            country,
+            province,
+            city,
+            district,
+            lat,
+            lgt
+          }
+
+          let obj = {
             leadType: this.leadType,
             propertyType: this.result.value,
             bedrooms: this.bedrooms,
             floorSize: this.valueSqm,
             agentId: this.commonApi.getRequest().agentId,
-            // agentId:'1290924392401997824',
             budget: this.value,
             customerName: this.username,
             customerPhone: this.tel,
             customerEmail: this.email,
-            customerMemo: this.message,
-            lat: this.addressObj.lat,
-            lgt: this.addressObj.lgt
-          }).then(res => {
+            customerMemo: this.message
+          }
+
+          if (addrInfo.addr) {
+            obj = Object.assign({}, obj, addrInfo)
+          } else {
+            obj.community= this.addresValue
+            obj.communityId= this.addressObj.id
+            obj.country= this.addressObj.country
+            obj.countryId= this.addressObj.countryId
+            obj.province= this.addressObj.province
+            obj.provinceId= this.addressObj.provinceId
+            obj.city= this.addressObj.city
+            obj.cityId= this.addressObj.cityId
+            obj.district= this.addressObj.district
+            obj.districtId= this.addressObj.districtId
+            obj.address= this.addressObj.address
+            obj.lat= this.addressObj.lat
+            obj.lgt= this.addressObj.lgt
+          }
+
+          this.axios.post("/api/h5/v1/leads", obj)
+          .then(res => {
             this.isScuess = true;
             let _this = this;
             setTimeout(function() {
@@ -416,7 +435,6 @@
                 path: "/"
               });
             }, 2000)
-
           })
         } else {
           this.isQuestion = true;

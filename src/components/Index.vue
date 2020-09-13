@@ -714,7 +714,8 @@
         if(mapSdk) return this.getMap()
         const script = document.createElement('script')
         script.id = 'mapSdk'
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=en-ww'
+        const lang = 'en-ww'
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=' + lang
         document.getElementsByTagName("head")[0].appendChild(script)
       },
       alertTip: function() {
