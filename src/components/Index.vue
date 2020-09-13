@@ -751,10 +751,10 @@
 
         this.axios.get("/api/h5/v1/houses/id", {
           params: {
-            agentId: '1300421010809556992',
-            houseId: '1303515252587106304'
-            // houseId: this.commonApi.getRequest().houseId,
-            // agentId: this.commonApi.getRequest().agentId
+            // agentId: '1300421010809556992',
+            // houseId: '1303515252587106304'
+            houseId: this.commonApi.getRequest().houseId,
+            agentId: this.commonApi.getRequest().agentId
           },
         }).then(res => {
           console.log(res)
@@ -1204,8 +1204,8 @@
       getDataAgentDetail: function() {
         this.axios.get("/api/h5/v1/agents/id", {
           params: {
-            // agentId: this.commonApi.getRequest().agentId
-            agentId: '1300421010809556992'
+            agentId: this.commonApi.getRequest().agentId
+            // agentId: '1300421010809556992'
           },
         }).then(res => {
           this.firstName = res.data.data.firstName;
