@@ -20,7 +20,7 @@
           <van-field v-model="value2" name="validator" class="user_tel" placeholder="+66945357465 (optional )" />
           <van-field v-model="value3" name="asyncValidator" class="user_email" placeholder="nicole@example.com (optional )" />
           <div>
-            <van-button round block type="info" native-type="submit">
+            <van-button round block type="info" native-type="submit" @click="submit">
               Submit
             </van-button>
           </div>
@@ -75,10 +75,24 @@
       console.log(this.agentHeader);
     },
     methods: {
-
+      submit () {
+        this.reportData(this.value1)
+      },
+      reportData (name) {
+        this.axios.post('api/h5/v1/houses/chat',{
+          houseId: this.commonApi.getRequest().houseId,
+          agentId: this.commonApi.getRequest().agentId,
+          customerName: name || 'auto',
+          customerPhone: this.value2,
+          customerEmail: this.value3,
+          channel: this.commonApi.getRequest().channel,
+          language: this.commonApi.getRequest().language,
+        })
+      },
       // 校验函数返回 true 表示校验通过，false 表示不通过
       showPopup() {
         this.show = true;
+        // this.reportData()
       },
       validator(val) {
         return /1\d{10}/.test(val);

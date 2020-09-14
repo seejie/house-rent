@@ -285,6 +285,7 @@
 
     },
     created() {
+      this.init()
       console.log(this.value, this.value / parseInt(this.$route.query.Rate), parseInt(this.$route.query.Rate))
       if (this.leadType == '1') {
         this.isSale = true;
@@ -293,6 +294,20 @@
       }
     },
     methods: {
+      init() {
+        const listingVal = +this.$route.query.listingVal
+        this.buttonList.forEach(el => {
+          this.$set(el, 'isActive', el.value === listingVal)
+        })
+        this.leadType = listingVal
+        const wyType = this.$route.query.wyType
+        const obj = this.option1.find(el => el.value === +wyType)
+        this.titleHouse = obj.text
+        this.result = obj
+        this.option1.forEach(el => {
+          this.$set(el, 'checked', el.value === obj.value)
+        })
+      },
       onchangeValue: function() {
         if (this.value >= 1000) {
           this.value = this.value / 1000;
@@ -302,6 +317,10 @@
         }
       },
       activeFun: function(data) {
+        const query = JSON.parse(JSON.stringify(this.$route.query))
+        query.listingVal = data.value
+        this.$router.replace({query})
+
         this.buttonList.forEach(function(obj) {
           obj.isActive = false;
         });
@@ -326,9 +345,9 @@
         this.bedrooms = data.value;
         console.log(this.bedrooms)
       },
-      onSubmit: function(values) {
-        console.log('submit', values);
-      },
+      // onSubmit: function(values) {
+      //   console.log('submit', values);
+      // },
       changShow: function(value) {
         this.isShow = !this.isShow;
       },
@@ -356,6 +375,10 @@
         }
       },
       confirmCheckBox: function() {
+        const query = JSON.parse(JSON.stringify(this.$route.query))
+        query.wyType = this.result.value
+        this.$router.replace({query})
+
         console.log(this.result.value)
         this.titleHouse = this.result.text;
         this.isShow = !this.isShow;

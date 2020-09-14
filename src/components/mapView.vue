@@ -16,19 +16,25 @@ export default {
       lat: this.$route.query.lat, 
       lgt: this.$route.query.lgt,
       map: null,
-      type: 'ROADMAP'
+      type: 'ROADMAP',
+      inChina: false
     }
   },
   mounted () {
-    this.getMap()
-    this.getUserPosition()
+    this.initMap()
   },
   methods: {
-    getMap() {
-      if(!window.google) {
-        this.useBdMap()
-        return 
-      }
+    initMap () {
+      this.axios.get("api/v1/ipType")
+      .then(res=> {
+        if (res.data.data.ipType === 'CN') {
+          this.initBDMap()
+        }else {
+          this.initGoogleMap()
+        }
+      })
+    },
+    initGoogleMap() {
       var map = new google.maps.Map(document.getElementById("mapView"), {
         zoom: 15,
         mapTypeId: google.maps.MapTypeId[this.type]
@@ -46,17 +52,13 @@ export default {
       map.setCenter(new google.maps.LatLng(this.lat, this.lgt));
       this.map = map
     },
-    getUserPosition() {
-      navigator.geolocation.getCurrentPosition(({coords}) => {
-        console.log(coords, '-----coords-----')
-      });
-    },
-    useBdMap() {
-      console.log(1, '-----1-----')
+    initBDMap() {
+      var map = new BMapGL.Map("mapView");
+      var point = new BMapGL.Point(116.404, 39.915);
     },
     toggle(val) {
       this.type = val !== 'map' ? 'HYBRID' : 'ROADMAP'
-      this.getMap()
+      this.initGoogleMap()
     } 
   }
 }

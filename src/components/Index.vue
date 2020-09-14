@@ -670,12 +670,13 @@
         landSizeTT: '',
         landSizeTTT: '',
         landSizeT: '',
-        renTTT: ''
+        renTTT: '',
+        inChina: false
       };
     },
 
     mounted() {
-      this.initScript()
+      // this.initScript()
       this.height = this.$refs.getheight.offsetHeight;
       if (this.height > 120) {
         this.isheight = true
@@ -687,8 +688,11 @@
 
     created() {
       window.initAutocomplete = this.getMap
+      window.initbdmap = this.initbdmap
       this.getDataHourseDetail();
       this.getDataAgent();
+      this.getUserPosition();
+      // this.reportData()
       // this.getAreaData();
       // this.rmbSellPrice = (this.price / this.exchangeRate) * 7;
       // this.rmbRentPrice = (this.rentingPrice / this.exchangeRate) * 7;
@@ -709,13 +713,40 @@
 
     },
     methods: {
+      reportData(name) {
+        this.axios.post('api/h5/v1/houses/chat',{
+          houseId: this.commonApi.getRequest().houseId,
+          agentId: this.commonApi.getRequest().agentId,
+          customerName: name || 'auto',
+          customerPhone: '',
+          customerEmail: '',
+          channel: this.commonApi.getRequest().channel,
+          language: this.commonApi.getRequest().language,
+        })
+      },
+      getUserPosition() {
+        this.axios.get("api/v1/ipType")
+        .then(res=> {
+          this.inChina = res.data.data.ipType === 'CN'
+          this.initScript()
+        })
+      },
+      initbdmap (){
+        console.log(2, '-----2-----')
+        var map = new BMapGL.Map("map");
+        // 创建地图实例 
+        var point = new BMapGL.Point(116.404, 39.915);
+        // 创建点坐标 
+        map.centerAndZoom(point, 15);
+      },
       initScript () {
         const mapSdk = document.getElementById('mapSdk')
-        if(mapSdk) return this.getMap()
+        if(mapSdk) return 
         const script = document.createElement('script')
         script.id = 'mapSdk'
         const lang = 'en-ww'
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=' + lang
+        script.src = this.inChina ? 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=' + lang 
+          : 'https://api.map.baidu.com/api?v=1.0&type=webgl&ak=x0lB5P2zbI53kTPjIiwvu27cNteglr9Y&callback=initbdmap'
         document.getElementsByTagName("head")[0].appendChild(script)
       },
       alertTip: function() {
@@ -751,8 +782,6 @@
 
         this.axios.get("/api/h5/v1/houses/id", {
           params: {
-            // agentId: '1300421010809556992',
-            // houseId: '1303515252587106304'
             houseId: this.commonApi.getRequest().houseId,
             agentId: this.commonApi.getRequest().agentId
           },
