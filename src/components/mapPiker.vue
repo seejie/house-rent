@@ -2,20 +2,20 @@
   <div class="wrapper">
     <div id="mapPiker"></div>
     <van-search v-model="search"
-      show-action placeholder="请输入"
-      action-text="取消"
+      show-action 
+      :action-text="cancel"
       clearable
       @clear="onClear"
       @search="onSearch"
       @input="onInput" />
-    <div id="list" v-if="!!search && list.length">
+    <div id="list" :class="{hide: needHide()}">
       <template v-if="list.length && selected">
         <div class="selected-title">{{selected.name}}</div>
-        <div class="confirm-btn" @click="confirmCurr()">确认</div>
+        <div class="confirm-btn" @click="confirmCurr()">{{$t("Submit")}}</div>
       </template>
-      <template v-else-if="list.length && !selected">
-        <div class="item loading" v-if="!list.length && search && !notfound && !selected">加载中...</div>
-        <div class="item notFound" v-if="search && notfound">抱歉，未找到！</div>
+      <template v-else-if="!selected">
+        <div class="item loading" v-if="!list.length && search && !notfound && !selected">{{$t("loading")}}...</div>
+        <div class="item notFound" v-if="search && notfound">{{$t("notFound")}}</div>
         <div v-for="(item, index) in list"
           :key="index"
           class="item"
@@ -38,7 +38,8 @@ export default {
       search: '',
       list: [],
       notfound: false,
-      selected: null
+      selected: null,
+      cancel: this.$t('cancel')
     }
   },
   mounted () {
@@ -158,6 +159,10 @@ export default {
         }
         this.list = []
       });
+    },
+    needHide () {
+      if (!this.search) return true
+      return false
     }
   }
 }
@@ -188,6 +193,9 @@ export default {
   max-height: 30vh;
   overflow-y: scroll;
   border: 20px solid #fff;
+  &.hide{
+    border: 0;
+  }
   .item{
     color: #393E41;
     padding: 10px;

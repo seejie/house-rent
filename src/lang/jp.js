@@ -48,5 +48,8 @@ module.exports = {
   autoMsg: 'この物件はまだ空いてますか？興味があります。私の連絡先は+66945357465, nicole@qq.com',
   nameRequire: 'お名前を入力してください',
   mapV: 'map view',
-  streetV: 'street view'
+  streetV: 'street view',
+  cancel: 'Cancel',
+  loading: '加载中',
+  notFound: '抱歉，未找到'
 }
