@@ -144,7 +144,7 @@
 
           </div>
           <div class="loctionBox" @click="mapClicked">
-            <div id="map" style="  height: 100%;width:100%"></div>
+            <div id="map" style="height: 100%;width:100%" ></div>
           </div>
         </van-col>
       </van-row>
@@ -676,14 +676,12 @@
     },
 
     mounted() {
-      // this.initScript()
       this.height = this.$refs.getheight.offsetHeight;
       if (this.height > 120) {
         this.isheight = true
       } else {
         this.isheight = false
       }
-      // this.getMap()
     },
 
     created() {
@@ -728,16 +726,21 @@
         this.axios.get("api/v1/ipType")
         .then(res=> {
           this.inChina = res.data.data.ipType === 'CN'
+          console.log(this.inChina, '-----inChina-----')
           this.initScript()
         })
       },
       initbdmap (){
-        console.log(2, '-----2-----')
-        var map = new BMapGL.Map("map");
-        // 创建地图实例 
-        var point = new BMapGL.Point(116.404, 39.915);
-        // 创建点坐标 
-        map.centerAndZoom(point, 15);
+        var ggPoint = new BMap.Point(this.lgt,this.lat);
+        var map = new BMap.Map("map");
+        map.centerAndZoom(ggPoint, 15);
+        setTimeout(() =>{
+          console.log(ggPoint, '-----ggPoint-----')
+          new BMap.Convertor().translate([ggPoint], 1, 5, data=>{
+            console.log(data, '-----data-----')
+          })
+        },0)
+        map.disableDragging()
       },
       initScript () {
         const mapSdk = document.getElementById('mapSdk')
@@ -745,8 +748,8 @@
         const script = document.createElement('script')
         script.id = 'mapSdk'
         const lang = 'en-ww'
-        script.src = this.inChina ? 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=' + lang 
-          : 'https://api.map.baidu.com/api?v=1.0&type=webgl&ak=x0lB5P2zbI53kTPjIiwvu27cNteglr9Y&callback=initbdmap'
+        script.src = !this.inChina ? 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=' + lang 
+          : 'https://api.map.baidu.com/api?v=2.0&ak=x0lB5P2zbI53kTPjIiwvu27cNteglr9Y&callback=initbdmap'
         document.getElementsByTagName("head")[0].appendChild(script)
       },
       alertTip: function() {
@@ -786,7 +789,7 @@
             agentId: this.commonApi.getRequest().agentId
           },
         }).then(res => {
-          console.log(res)
+          console.log(res,'11111')
           this.getAreaData();
           this.price = res.data.data.sellingPrice;
           this.sellingPrice = res.data.data.sellingPrice; //售价
