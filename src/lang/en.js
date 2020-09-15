@@ -45,5 +45,7 @@ module.exports = {
   "email":"lincole@example.com(optional )",
   inputName: 'Please input your name',
   autoMsg: 'Hi, is this listing still available? I’m very interested in it. My contact is +66945357465, nicole@qq.com',
-  nameRequire: 'Please input your name'
+  nameRequire: 'Please input your name',
+  mapV: 'map view',
+  streetV: 'street view'
 }

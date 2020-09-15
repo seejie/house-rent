@@ -45,5 +45,7 @@ module.exports = {
   "email":"nicole@example.com (选填)",
   inputName: '请输入您的姓名',
   autoMsg: '您好, 请问这个房子现在还有吗？我比较感兴趣。我的联系方式是+66945357465, nicole@qq.com',
-  nameRequire: '请输入您的姓名'
+  nameRequire: '请输入您的姓名',
+  mapV: 'map view',
+  streetV: 'street view'
 }

@@ -45,5 +45,7 @@ module.exports = {
   "email":"lincole@example.com(선택 사항)",
   inputName:"성함을 입력해 주세요",
   autoMsg: '안녕하세요, 이 집 거래 가능한가요? 집 구조가 마음에 드네요. 제 연락처는 +66945357465, nicole@qq.com',
-  nameRequire: '성함을 입력해 주세요'
+  nameRequire: '성함을 입력해 주세요',
+  mapV: 'map view',
+  streetV: 'street view'
 }
