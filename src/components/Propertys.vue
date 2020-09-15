@@ -295,19 +295,35 @@
     },
     methods: {
       init() {
-        const listingVal = +this.$route.query.listingVal
+        const {listingVal, wyType, country, checkCurrency} = this.$route.query
         this.buttonList.forEach(el => {
-          this.$set(el, 'isActive', el.value === listingVal)
+          this.$set(el, 'isActive', el.value === +listingVal)
         })
-        this.leadType = listingVal
-        const wyType = this.$route.query.wyType
+        this.leadType = +listingVal
         const obj = this.option1.find(el => el.value === +wyType)
 
-        if(!obj) return
-        this.titleHouse = obj.text
-        this.result = obj
-        this.option1.forEach(el => {
-          this.$set(el, 'checked', el.value === obj.value)
+        if(obj) {
+          this.titleHouse = obj.text
+          this.result = obj
+          this.option1.forEach(el => {
+            this.$set(el, 'checked', el.value === obj.value)
+          })
+        }
+        checkCurrency && this.pickCurrency(country)
+      },
+      pickCurrency (keyword = 'unknow') {
+        this.axios.get('api/v1/regions/match',{
+          params: {
+            keyword: keyword,
+            pid: '0'
+          }
+        }).then(res => {
+          const {currency, exchangeRate} = res.data.data
+          const query = JSON.parse(JSON.stringify(this.$route.query))
+          query.currency = currency
+          query.Rate = exchangeRate
+          delete query.checkCurrency
+          this.$router.push({query})
         })
       },
       onchangeValue: function() {

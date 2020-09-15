@@ -148,7 +148,8 @@ export default {
             country,
             province,
             city,
-            district
+            district,
+            checkCurrency: true
           })
           this.$router.push({
             path: '/Propertys',
