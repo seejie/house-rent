@@ -302,6 +302,8 @@
         this.leadType = listingVal
         const wyType = this.$route.query.wyType
         const obj = this.option1.find(el => el.value === +wyType)
+
+        if(!obj) return
         this.titleHouse = obj.text
         this.result = obj
         this.option1.forEach(el => {

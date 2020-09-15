@@ -42,5 +42,8 @@ module.exports = {
   "Area":"您需要多大的面积？",
   "Thank":"您的信息已提交，感谢您的信任！我会尽快和您联系！",
   "phone":"+66945357465 (选填)",
-  "email":"nicole@example.com (选填)"
+  "email":"nicole@example.com (选填)",
+  inputName: '请输入您的姓名',
+  autoMsg: '您好, 请问这个房子现在还有吗？我比较感兴趣。我的联系方式是+66945357465, nicole@qq.com',
+  nameRequire: '请输入您的姓名'
 }

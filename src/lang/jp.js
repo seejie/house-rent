@@ -43,5 +43,8 @@ module.exports = {
   "Area":"どれぐらいの面積が必要ですか？",
   "Thank":"ご依頼いただきありがとうございます。まもなくご連絡いたします。",
   "phone":"+8201012345678",
-  "email":"lincole@example.com"
+  "email":"lincole@example.com",
+  inputName: 'お名前を入力してください',
+  autoMsg: 'この物件はまだ空いてますか？興味があります。私の連絡先は+66945357465, nicole@qq.com',
+  nameRequire: 'お名前を入力してください'
 }

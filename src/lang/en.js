@@ -42,5 +42,8 @@ module.exports = {
   "Area":"How much area do you need?",
   "Thank":"Thank you for sending your request.I’ll get in touch with you shortly.",
   "phone":"+8201012345678(optional )",
-  "email":"lincole@example.com(optional )"
+  "email":"lincole@example.com(optional )",
+  inputName: 'Please input your name',
+  autoMsg: 'Hi, is this listing still available? I’m very interested in it. My contact is +66945357465, nicole@qq.com',
+  nameRequire: 'Please input your name'
 }
