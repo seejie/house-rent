@@ -99,6 +99,7 @@ export default {
         } else {
           map.setMapType(BMAP_NORMAL_MAP)
         }
+        this.map = map
       } catch (error) {
         
       }
@@ -126,13 +127,15 @@ export default {
     onSearch(){
       console.log(2, '-----2-----')
     },
-    onInput(query){
+    async onInput(query){
       this.selected = null
       if (!query) {
         this.list = []
         return
       }
-      
+      await this[this.inChina === 1 ? 'queryBD' : 'queryGoogle'](query)
+    },
+    queryGoogle () {
       const map = this.map
       const service = new google.maps.places.PlacesService(map)
       service.textSearch({
@@ -149,9 +152,35 @@ export default {
         }
       });
     },
+    queryBD(query) {
+      const vm = this
+      var options = {
+        onSearchComplete: function(results){
+          const {Hr} = results
+          if (Hr.length) {
+            console.log(Hr, '-----Hr-----')
+            vm.list = Hr.map(({title, ...rest}) => {
+              return {
+                name: title,
+                ...rest
+              }
+            })
+            vm.notfound = false
+          } else {
+            vm.list = []
+            vm.notfound = true
+          }
+          if(!vm.search) {
+            vm.list = []
+          }
+        }
+      };
+
+      var local = new BMap.LocalSearch(this.map, options);
+	    local.search(query);
+    },
     selectCurr(item){
       this.selected = item
-      // this.list = []
     },
     confirmCurr() {
       const map = this.map
