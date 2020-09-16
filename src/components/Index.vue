@@ -144,6 +144,7 @@
 
           </div>
           <div class="loctionBox" @click="mapClicked">
+            <div id="loading" v-if="loadingMap">{{$t('loading')}}...</div>
             <div id="map" style="height: 100%;width:100%" ></div>
           </div>
         </van-col>
@@ -671,7 +672,8 @@
         landSizeTTT: '',
         landSizeT: '',
         renTTT: '',
-        inChina: false
+        inChina: 1,
+        loadingMap: true
       };
     },
 
@@ -685,8 +687,8 @@
     },
 
     created() {
-      window.initAutocomplete = this.getMap
-      window.initbdmap = this.initbdmap
+      window.initAutocomplete = this.initGoogleMap
+      window.initBDMap = this.initBDMap
       this.getDataHourseDetail();
       this.getDataAgent();
       this.getUserPosition();
@@ -725,31 +727,34 @@
       getUserPosition() {
         this.axios.get("api/v1/ipType")
         .then(res=> {
-          this.inChina = res.data.data.ipType === 'CN'
-          console.log(this.inChina, '-----inChina-----')
-          this.initScript()
+          // this.inChina = res.data.data.ipType === 'CN' ? 1 : 0
+          this.inChina = res.data.data.ipType === 'CN' ? 0 : 1
+          this.initScript(this.inChina)
         })
       },
-      initbdmap (){
+      initBDMap (){
         var ggPoint = new BMap.Point(this.lgt,this.lat);
         var map = new BMap.Map("map");
         map.centerAndZoom(ggPoint, 15);
         setTimeout(() =>{
-          console.log(ggPoint, '-----ggPoint-----')
           new BMap.Convertor().translate([ggPoint], 1, 5, data=>{
             console.log(data, '-----data-----')
           })
         },0)
         map.disableDragging()
+        this.loadingMap = false
       },
-      initScript () {
+      initScript (n) {
         const mapSdk = document.getElementById('mapSdk')
-        if(mapSdk) return 
+        if(mapSdk) {
+          this[n === 1 ? 'initBDMap' : 'initGoogleMap']()
+          return
+        } 
         const script = document.createElement('script')
         script.id = 'mapSdk'
         const lang = 'en-ww'
-        script.src = !this.inChina ? 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=' + lang 
-          : 'https://api.map.baidu.com/api?v=2.0&ak=x0lB5P2zbI53kTPjIiwvu27cNteglr9Y&callback=initbdmap'
+        script.src = n !== 1 ? 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=' + lang 
+          : 'https://api.map.baidu.com/api?v=2.0&ak=x0lB5P2zbI53kTPjIiwvu27cNteglr9Y&callback=initBDMap'
         document.getElementsByTagName("head")[0].appendChild(script)
       },
       alertTip: function() {
@@ -789,7 +794,6 @@
             agentId: this.commonApi.getRequest().agentId
           },
         }).then(res => {
-          console.log(res,'11111')
           this.getAreaData();
           this.price = res.data.data.sellingPrice;
           this.sellingPrice = res.data.data.sellingPrice; //售价
@@ -1317,18 +1321,17 @@
       onFailed(errorInfo) {
         console.log('failed', errorInfo);
       },
-      getMap() {
+      initGoogleMap() {
         this.getDataHourseDetail();
         var map = new google.maps.Map(document.getElementById("map"), {
           zoom: 15,
-
         });
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(this.lat, this.lgt),
           map: map
         });
-        // map.setCenter(new google.maps.LatLng( 23.117055306224895, 113.2759952545166));
         map.setCenter(new google.maps.LatLng(this.lat, this.lgt));
+        this.loadingMap = false
       },
       // 地图被点击
       mapClicked () {
@@ -1998,5 +2001,12 @@
   .priceBoxHead{
     width: 100%;
     overflow: hidden;
+  }
+  #loading{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
   }
 </style>
