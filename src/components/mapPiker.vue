@@ -183,6 +183,28 @@ export default {
       this.selected = item
     },
     confirmCurr() {
+      this[this.inChina===1 ? 'confirmCurrBD' : 'confirmCurrGoogle']()
+    },
+    confirmCurrBD () {
+      console.log(this.selected, '-----1-----')
+      const {address, province,city} = this.selected
+      const query = Object.assign({}, 
+        JSON.parse(JSON.stringify(this.$route.query)), {
+        lat: this.latitude,
+        lgt: this.longitude,
+        addr: address,
+        country: '中国',
+        province,
+        city,
+        district: '',
+        checkCurrency: true
+      })
+      this.$router.push({
+        path: '/Propertys',
+        query
+      })
+    },
+    confirmCurrGoogle () {
       const map = this.map
       const service = new google.maps.places.PlacesService(map)
       service.getDetails({
