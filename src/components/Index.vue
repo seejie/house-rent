@@ -1334,7 +1334,7 @@
       mapClicked () {
         this.$router.push({
           path: 'mapView',
-          query: {lat: this.lat, lgt: this.lgt}
+          query: {lat: this.lat, lgt: this.lgt, inChina: this.inChina}
         })
       }
     }

@@ -17,23 +17,13 @@ export default {
       lgt: this.$route.query.lgt,
       map: null,
       type: 'ROADMAP',
-      inChina: false
+      inChina: this.$route.query.inChina
     }
   },
   mounted () {
-    this.initMap()
+    this[this.inChina ? 'initBDMap' : 'initGoogleMap']()
   },
   methods: {
-    initMap () {
-      this.axios.get("api/v1/ipType")
-      .then(res=> {
-        if (res.data.data.ipType === 'CN') {
-          this.initBDMap()
-        }else {
-          this.initGoogleMap()
-        }
-      })
-    },
     initGoogleMap() {
       var map = new google.maps.Map(document.getElementById("mapView"), {
         zoom: 15,
@@ -53,12 +43,26 @@ export default {
       this.map = map
     },
     initBDMap() {
-      var map = new BMapGL.Map("mapView");
-      var point = new BMapGL.Point(116.404, 39.915);
+      var map = new BMap.Map("mapView");
+      var ggPoint = new BMap.Point(this.lgt,this.lat);
+      map.centerAndZoom(ggPoint, 15);
+      map.enableScrollWheelZoom(true);
+      
+      setTimeout(() =>{
+        new BMap.Convertor().translate([ggPoint], 1, 5, data=>{
+          console.log(data, '-----data-----')
+        })
+      },0)
+
+      if (this.type === 'HYBRID') {
+        map.setMapType(BMAP_HYBRID_MAP)
+      } else {
+        map.setMapType(BMAP_NORMAL_MAP)
+      }
     },
     toggle(val) {
       this.type = val !== 'map' ? 'HYBRID' : 'ROADMAP'
-      this.initGoogleMap()
+      this[this.inChina ? 'initBDMap' : 'initGoogleMap']()
     } 
   }
 }
