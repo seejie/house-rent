@@ -46,8 +46,8 @@ module.exports = {
   inputName: 'Please input your name',
   autoMsg: 'Hi, is this listing still available? I’m very interested in it. My contact is +66945357465, nicole@qq.com',
   nameRequire: 'Please input your name',
-  mapV: 'map view',
-  streetV: 'street view',
+  mapV: 'Map View',
+  streetV: 'Street View',
   cancel: 'Cancel',
   loading: '加载中',
   notFound: '抱歉，未找到'
