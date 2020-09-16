@@ -25,7 +25,7 @@ export default {
   },
   created () {
     window.initAutocomplete = this.initGoogleMap
-    window.initbdmap = this.initBDMap
+    window.initBDMap = this.initBDMap
     this.initScript()
   },
   methods: {
@@ -86,7 +86,7 @@ export default {
       script.id = 'mapSdk'
       const lang = 'en-ww'
       script.src = this.inChina !== 1 ? 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=' + lang 
-        : 'https://api.map.baidu.com/api?v=2.0&ak=x0lB5P2zbI53kTPjIiwvu27cNteglr9Y&callback=initbdmap'
+        : 'https://api.map.baidu.com/api?v=2.0&ak=x0lB5P2zbI53kTPjIiwvu27cNteglr9Y&callback=initBDMap'
       document.getElementsByTagName("head")[0].appendChild(script)
     },
   }

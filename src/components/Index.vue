@@ -727,8 +727,8 @@
       getUserPosition() {
         this.axios.get("api/v1/ipType")
         .then(res=> {
-          // this.inChina = res.data.data.ipType === 'CN' ? 1 : 0
-          this.inChina = res.data.data.ipType === 'CN' ? 0 : 1
+          this.inChina = res.data.data.ipType === 'CN' ? 1 : 0
+          // this.inChina = res.data.data.ipType === 'CN' ? 0 : 1
           this.initScript(this.inChina)
         })
       },
@@ -1302,7 +1302,8 @@
             currency: this.currency,
             agentId: this.commonApi.getRequest().agentId,
             country: this.country,
-            Rate: this.exchangeRate
+            Rate: this.exchangeRate,
+            inChina: this.inChina
           }
         });
       },

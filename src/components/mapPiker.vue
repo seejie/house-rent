@@ -39,12 +39,17 @@ export default {
       list: [],
       notfound: false,
       selected: null,
-      cancel: this.$t('cancel')
+      cancel: this.$t('cancel'),
+      inChina: +this.$route.query.inChina
     }
   },
   mounted () {
-    this.getMap()
-    this.getUserPosition()
+    this[this.inChina === 1 ? 'initBDMap' : 'initGoogleMap']()
+  },
+  created () {
+    window.initAutocomplete = this.initGoogleMap
+    window.initBDMap = this.initBDMap
+    this.getUserLocation()
   },
   watch: {
     query (val) {
@@ -53,11 +58,52 @@ export default {
     }
   },
   methods: {
-    getMap() {
-      // if(!window.google) {
-      //   this.useBdMap()
-      //   return 
-      // }
+    getUserLocation() {
+      navigator.geolocation.getCurrentPosition(position => {
+        const {longitude,latitude} = position.coords
+        this.longitude = longitude
+        this.latitude = latitude
+        this.initScript()
+      }, () => {
+        this.initScript()
+      })
+    },
+    initScript () {
+      const mapSdk = document.getElementById('mapSdk')
+      if(mapSdk) {
+        this[this.inChina === 1 ? 'initBDMap' : 'initGoogleMap']()
+        return
+      } 
+      const script = document.createElement('script')
+      script.id = 'mapSdk'
+      const lang = 'en-ww'
+      script.src = this.inChina !== 1 ? 'https://maps.googleapis.com/maps/api/js?key=AIzaSyALodR-VI9EV_CFDOWHZZQgeUWdMP6lZMg&callback=initAutocomplete&libraries=places&v=weekly&language=' + lang 
+        : 'https://api.map.baidu.com/api?v=2.0&ak=x0lB5P2zbI53kTPjIiwvu27cNteglr9Y&callback=initBDMap'
+      document.getElementsByTagName("head")[0].appendChild(script)
+    },
+    initBDMap() {
+      try {
+        var map = new BMap.Map("mapPiker");
+        var ggPoint = new BMap.Point(this.longitude, this.latitude);
+        map.centerAndZoom(ggPoint, 15);
+        map.enableScrollWheelZoom(true);
+        
+        setTimeout(() =>{
+          new BMap.Convertor().translate([ggPoint], 1, 5, data=>{
+            console.log(data, '-----data-----')
+          })
+        },0)
+
+        if (this.type === 'HYBRID') {
+          map.setMapType(BMAP_HYBRID_MAP)
+        } else {
+          map.setMapType(BMAP_NORMAL_MAP)
+        }
+      } catch (error) {
+        
+      }
+    },
+    initGoogleMap() {
       var map = new google.maps.Map(document.getElementById("mapPiker"), {
         zoom: 15,
       });
@@ -73,16 +119,6 @@ export default {
       })
       map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
       this.map = map
-    },
-    getUserPosition() {
-      navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}}) => {
-        this.latitude = latitude
-        this.longitude = longitude
-        this.getMap()
-      });
-    },
-    useBdMap() {
-      console.log('-----baidu-----')
     },
     onClear(){
       this.list = []
