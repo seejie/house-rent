@@ -78,6 +78,10 @@ export default {
           // eslint-disable-next-line
           map.setMapType(BMAP_NORMAL_MAP)
         }
+        
+        var marker = new BMap.Marker(ggPoint);
+        map.addOverlay(marker);
+
       } catch (error) {
         
       }

@@ -104,6 +104,10 @@ export default {
           // eslint-disable-next-line
           map.setMapType(BMAP_NORMAL_MAP)
         }
+
+        var marker = new BMap.Marker(ggPoint);
+        map.addOverlay(marker);
+
         this.map = map
       } catch (error) {
         
@@ -165,21 +169,35 @@ export default {
     },
     queryBD(query) {
       const vm = this
+      const map = this.map
+      var ggPoint = new BMap.Point(this.longitude, this.latitude)
+
       var options = {
         onSearchComplete: function(results){
+          var marker = new BMap.Marker(ggPoint);
           const {Hr} = results
+
           if (Hr.length) {
             console.log(Hr, '-----Hr-----')
             vm.list = Hr.map(({title, ...rest}) => {
+              map.addOverlay(rest.point)
               return {
                 name: title,
                 ...rest
               }
             })
             vm.notfound = false
+            map.removeOverlay(ggPoint)
+
           } else {
             vm.list = []
             vm.notfound = true
+            
+            map.addOverlay(marker);
+            var allOverlay = map.getOverlays();
+            for (var i = 0; i < allOverlay.length -1; i++){
+                map.removeOverlay(allOverlay[i]);
+            }
           }
           if(!vm.search) {
             vm.list = []

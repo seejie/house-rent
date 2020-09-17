@@ -745,6 +745,10 @@
           })
         },0)
         map.disableDragging()
+
+        var marker = new BMap.Marker(ggPoint);
+        map.addOverlay(marker);
+        
         this.loadingMap = false
       },
       initScript (n) {
