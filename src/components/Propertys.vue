@@ -295,6 +295,7 @@
     },
     methods: {
       init() {
+        document.documentElement.scrollTop = 0
         const {listingVal, wyType, country, checkCurrency} = this.$route.query
         this.buttonList.forEach(el => {
           this.$set(el, 'isActive', el.value === +listingVal)
