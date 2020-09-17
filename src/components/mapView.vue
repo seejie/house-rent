@@ -31,8 +31,10 @@ export default {
   methods: {
     initGoogleMap() {
       try {
+        // eslint-disable-next-line
         var map = new google.maps.Map(document.getElementById("mapView"), {
           zoom: 15,
+          // eslint-disable-next-line
           mapTypeId: google.maps.MapTypeId[this.type]
         });
         map.setOptions({
@@ -41,10 +43,13 @@ export default {
           mapTypeControl: false,
           streetViewControl: false
         })
+        // eslint-disable-next-line
         var marker = new google.maps.Marker({
+          // eslint-disable-next-line
           position: new google.maps.LatLng(this.lat, this.lgt),
           map: map
         });
+        // eslint-disable-next-line
         map.setCenter(new google.maps.LatLng(this.lat, this.lgt));
       } catch (error) {
         
@@ -52,20 +57,25 @@ export default {
     },
     initBDMap() {
       try {
+        // eslint-disable-next-line
         var map = new BMap.Map("mapView");
+        // eslint-disable-next-line
         var ggPoint = new BMap.Point(this.lgt,this.lat);
         map.centerAndZoom(ggPoint, 15);
         map.enableScrollWheelZoom(true);
         
         setTimeout(() =>{
+          // eslint-disable-next-line
           new BMap.Convertor().translate([ggPoint], 1, 5, data=>{
             console.log(data, '-----data-----')
           })
         },0)
 
         if (this.type === 'HYBRID') {
+          // eslint-disable-next-line
           map.setMapType(BMAP_HYBRID_MAP)
         } else {
+          // eslint-disable-next-line
           map.setMapType(BMAP_NORMAL_MAP)
         }
       } catch (error) {

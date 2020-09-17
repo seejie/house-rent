@@ -176,6 +176,7 @@ export default {
     },
 
     initAutocomplete () {
+      // eslint-disable-next-line
       const map = new google.maps.Map(document.getElementById('map'), {
         center: {
           lat: 31.291038,
@@ -188,7 +189,9 @@ export default {
       }) // Create the search box and link it to the UI element.
 
       const input = document.getElementById('pac-input')
+      // eslint-disable-next-line
       const searchBox = new google.maps.places.SearchBox(input)
+      // eslint-disable-next-line
       map.controls[google.maps.ControlPosition.TOP_LEFT].push(input) // Bias the SearchBox results towards current map's viewport.
 
       map.addListener('bounds_changed', () => {
@@ -209,6 +212,7 @@ export default {
         })
         markers = [] // For each place, get the icon, name and location.
 
+        // eslint-disable-next-line
         const bounds = new google.maps.LatLngBounds()
         places.forEach(place => {
           if (!place.geometry) {
@@ -225,6 +229,7 @@ export default {
           // } // Create a marker for each place.
 
           markers.push(
+            // eslint-disable-next-line
             new google.maps.Marker({
               map,
               // icon,

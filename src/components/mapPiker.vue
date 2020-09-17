@@ -83,20 +83,25 @@ export default {
     },
     initBDMap() {
       try {
+        // eslint-disable-next-line
         var map = new BMap.Map("mapPiker");
+        // eslint-disable-next-line
         var ggPoint = new BMap.Point(this.longitude, this.latitude);
         map.centerAndZoom(ggPoint, 15);
         map.enableScrollWheelZoom(true);
         
         setTimeout(() =>{
+          // eslint-disable-next-line
           new BMap.Convertor().translate([ggPoint], 1, 5, data=>{
             console.log(data, '-----data-----')
           })
         },0)
 
         if (this.type === 'HYBRID') {
+          // eslint-disable-next-line
           map.setMapType(BMAP_HYBRID_MAP)
         } else {
+          // eslint-disable-next-line
           map.setMapType(BMAP_NORMAL_MAP)
         }
         this.map = map
@@ -105,10 +110,13 @@ export default {
       }
     },
     initGoogleMap() {
+      // eslint-disable-next-line
       var map = new google.maps.Map(document.getElementById("mapPiker"), {
         zoom: 15,
       });
+      // eslint-disable-next-line
       var marker = new google.maps.Marker({
+        // eslint-disable-next-line
         position: new google.maps.LatLng(this.latitude, this.longitude),
         map: map
       });
@@ -118,6 +126,7 @@ export default {
         mapTypeControl: false,
         streetViewControl: false
       })
+      // eslint-disable-next-line
       map.setCenter(new google.maps.LatLng(this.latitude, this.longitude));
       this.map = map
     },
@@ -135,14 +144,16 @@ export default {
       }
       await this[this.inChina === 1 ? 'queryBD' : 'queryGoogle'](query)
     },
-    queryGoogle () {
+    queryGoogle (query) {
       const map = this.map
+      // eslint-disable-next-line
       const service = new google.maps.places.PlacesService(map)
       service.textSearch({
         query,
         // fields: ['opening_hours','utc_offset_minutes']
         fields: ['ALL']
       }, (results, status) => {
+        // eslint-disable-next-line
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           this.list = results
           this.notfound = false
@@ -176,6 +187,7 @@ export default {
         }
       };
 
+      // eslint-disable-next-line
       var local = new BMap.LocalSearch(this.map, options);
 	    local.search(query);
     },
@@ -206,11 +218,13 @@ export default {
     },
     confirmCurrGoogle () {
       const map = this.map
+      // eslint-disable-next-line
       const service = new google.maps.places.PlacesService(map)
       service.getDetails({
         placeId: this.selected.place_id,
         fields: ['ALL']
       }, (results, status) => {
+        // eslint-disable-next-line
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           this.latitude = this.selected.geometry.location.lat()
           this.longitude = this.selected.geometry.location.lng()

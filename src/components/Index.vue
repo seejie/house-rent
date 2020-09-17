@@ -733,10 +733,13 @@
         })
       },
       initBDMap (){
+        // eslint-disable-next-line
         var ggPoint = new BMap.Point(this.lgt,this.lat);
+        // eslint-disable-next-line
         var map = new BMap.Map("map");
         map.centerAndZoom(ggPoint, 15);
         setTimeout(() =>{
+          // eslint-disable-next-line
           new BMap.Convertor().translate([ggPoint], 1, 5, data=>{
             console.log(data, '-----data-----')
           })

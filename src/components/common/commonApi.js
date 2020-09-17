@@ -36,7 +36,7 @@ function init() {
   // localStorage.setItem("lang", language);
   // this.$i18n.locale = language;
   // console.log(language);
-};
+}
 export default {
   getRequest,
   formatNumber,
