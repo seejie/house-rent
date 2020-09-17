@@ -160,6 +160,17 @@ export default {
         // eslint-disable-next-line
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           this.list = results
+          this.list.forEach(el => {
+            const obj = el.geometry.location
+            var marker = new google.maps.Marker({
+              position: new google.maps.LatLng(obj.lat(), obj.lng()),
+              icon: {
+                url: el.icon,
+                scaledSize: new google.maps.Size(24, 24)
+              },
+              map
+            });
+          })
           this.notfound = false
         } else {
           this.list = []
