@@ -837,7 +837,7 @@
           if (this.builtYear == 0 || this.builtYear == '' || this.builtYear == undefined) {
             this.builtYear = '-'
           }
-          if (this.parking == 0 || this.parking == '' || this.parking == undefined) {
+          if (this.parking == '' || this.parking == undefined) {
             this.parking = '-'
           }
           if (parseInt(this.landSize / 1600) == 0 || parseInt(this.landSize / 1600) == '' || parseInt(this.landSize /
